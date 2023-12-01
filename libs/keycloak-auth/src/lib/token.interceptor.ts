@@ -18,8 +18,7 @@ export class TokenInterceptor implements HttpInterceptor {
     if (skip) {
       return next.handle(request)
     }
-
-    const idToken = this.authService.getCurrentUser()?.idToken
+    const idToken = this.authService.getIdToken()
     if (idToken) {
       const authenticatedReq: HttpRequest<unknown> = request.clone({
         headers: request.headers.set('apm-principal-token', idToken),
