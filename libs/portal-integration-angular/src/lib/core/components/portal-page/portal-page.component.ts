@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, Injector, Input, OnInit } from '@angular/core'
+import { IAuthService } from '../../../api/iauth.service'
+import { AUTH_SERVICE } from '../../../api/injection-tokens'
 import { AppStateService } from '../../../services/app-state.service'
-import { UserService } from '../../../services/user.service'
 
 @Component({
   selector: 'ocx-portal-page',
@@ -15,10 +16,14 @@ export class PortalPageComponent implements OnInit {
 
   collapsed = false
 
-  constructor(private appState: AppStateService, private userService: UserService) {}
+  authService: IAuthService
+
+  constructor(private injectorObj: Injector, private appState: AppStateService) {
+    this.authService = this.injectorObj.get(AUTH_SERVICE)
+  }
 
   hasAccess() {
-    return this.permission ? this.userService.hasPermission(this.permission) : true
+    return this.permission ? this.authService.hasPermission(this.permission) : true
   }
 
   ngOnInit(): void {

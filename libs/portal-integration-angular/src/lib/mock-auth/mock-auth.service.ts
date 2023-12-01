@@ -91,8 +91,4 @@ export class MockAuthService implements IAuthService {
   getRoles(): string[] {
     return ['tkit-portal-admin']
   }
-
-  getIdToken(): string | null {
-    throw new Error('Method not implemented.')
-  }
 }

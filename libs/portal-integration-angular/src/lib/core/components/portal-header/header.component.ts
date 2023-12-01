@@ -11,7 +11,7 @@ import { ConfigurationService } from '../../../services/configuration.service'
 import { MenuService } from '../../../services/app.menu.service'
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy'
 import { CONFIG_KEY } from '../../../model/config-key.model'
-import { UserService } from '../../../services/user.service'
+import { AppStateService } from '../../../services/app-state.service'
 
 type MenuItemPerm = MenuItem & { permission: string }
 @Component({
@@ -89,9 +89,9 @@ export class HeaderComponent implements OnInit {
     @Inject(AUTH_SERVICE) private authService: IAuthService,
     private config: ConfigurationService,
     private menuService: MenuService,
-    private userService: UserService
+    private appStateService: AppStateService
   ) {
-    this.currentUser$ = this.userService.profile$
+    this.currentUser$ = this.authService.currentUser$
       .pipe(untilDestroyed(this))
       .pipe(filter((x) => x !== undefined)) as Observable<UserProfile>
   }

@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Inject,
   Input,
   OnChanges,
   OnInit,
@@ -12,9 +13,10 @@ import {
 import { MenuItem } from 'primeng/api'
 import { concat, map, Observable, of } from 'rxjs'
 import { BreadcrumbService } from '../../../services/breadcrumb.service'
+import { IAuthService } from '../../../api/iauth.service'
+import { AUTH_SERVICE } from '../../../api/injection-tokens'
 import { TranslateService } from '@ngx-translate/core'
 import { AppStateService } from '../../../services/app-state.service'
-import { UserService } from '../../../services/user.service'
 
 /**
  * Action definition.
@@ -112,9 +114,9 @@ export class PageHeaderComponent implements OnInit, OnChanges {
 
   constructor(
     breadcrumbs: BreadcrumbService,
+    @Inject(AUTH_SERVICE) private authService: IAuthService,
     private translateService: TranslateService,
-    private appStateService: AppStateService,
-    private userService: UserService
+    private appStateService: AppStateService
   ) {
     this.breadcrumbs = breadcrumbs
     this.home$ = concat(
@@ -215,7 +217,7 @@ export class PageHeaderComponent implements OnInit, OnChanges {
    */
   private checkActionPermission(allowedActions: Action[], action: Action) {
     if (action.permission) {
-      if (this.userService.hasPermission(action.permission)) {
+      if (this.authService.hasPermission(action.permission)) {
         // Push action to allowed array if user has sufficient permissions
         allowedActions.push(action)
       }

@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { TokenInterceptor } from './token.interceptor'
 
 export interface KeycloakAuthModuleConfig {
+  disablePermissionCheck: boolean
   tokenInterceptorWhitelist?: string[]
 }
 /**

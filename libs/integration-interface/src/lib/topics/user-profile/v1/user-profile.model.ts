@@ -7,13 +7,15 @@ export interface UserProfile {
    */
   identityProviderId?: string
   organization?: string
-  // wenn es vom server kommt, muss drin stehen
   tenantId?: string
   tenantName?: string
   person: UserPerson
   avatar?: AvatarInfo
   accountSettings?: UserProfileAccountSettings
+  roles?: Array<string>
   memberships?: Array<Membership>
+  idToken?: string
+  accessToken?: string
 }
 
 export interface UserProfileAccountSettings {

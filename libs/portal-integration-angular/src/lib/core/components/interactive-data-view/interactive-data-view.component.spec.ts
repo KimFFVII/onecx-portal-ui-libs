@@ -37,9 +37,6 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { TranslateTestingModule } from 'ngx-translate-testing'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import { DateUtils } from '../../utils/dateutils'
-import { HttpClientModule } from '@angular/common/http'
-import { UserService } from '../../../services/user.service'
-import { MockUserService } from '../../../../../mocks/mock-user-service'
 
 describe('InteractiveDataViewComponent', () => {
   let component: InteractiveDataViewComponent
@@ -231,7 +228,6 @@ describe('InteractiveDataViewComponent', () => {
           en: require('./../../../../../assets/i18n/en.json'),
           de: require('./../../../../../assets/i18n/de.json'),
         }),
-        HttpClientModule,
       ],
       providers: [
         {
@@ -243,7 +239,6 @@ describe('InteractiveDataViewComponent', () => {
             shellName: 'shell',
           },
         },
-        { provide: UserService, useClass: MockUserService },
       ],
     }).compileComponents()
 

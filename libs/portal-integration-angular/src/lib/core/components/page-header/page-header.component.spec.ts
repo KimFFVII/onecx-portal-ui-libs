@@ -3,14 +3,14 @@ import { Action, PageHeaderComponent } from './page-header.component'
 import { RouterTestingModule } from '@angular/router/testing'
 import { ConfigurationService } from '../../../services/configuration.service'
 import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { AUTH_SERVICE } from '../../../api/injection-tokens'
+import { MockAuthService } from '../../../mock-auth/mock-auth.service'
 import { Component } from '@angular/core'
 import { TranslateTestingModule } from 'ngx-translate-testing'
 import { BreadcrumbModule } from 'primeng/breadcrumb'
 import { MenuModule } from 'primeng/menu'
 import { ButtonModule } from 'primeng/button'
 import { AppStateService } from '../../../services/app-state.service'
-import { UserService } from '../../../services/user.service'
-import { MockUserService } from '../../../../../mocks/mock-user-service'
 
 const mockActions: Action[] = [
   {
@@ -65,8 +65,9 @@ describe('PageHeaderComponent', () => {
 
   let component: TestHostComponent
   let fixture: ComponentFixture<TestHostComponent>
-
-  let userServiceSpy: jest.SpyInstance<boolean, [permissionKey: string], any>
+  const mockService = new MockAuthService()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let authServiceSpy: jest.SpyInstance<boolean, [permissionKey: string], any>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -82,7 +83,7 @@ describe('PageHeaderComponent', () => {
         MenuModule,
         ButtonModule,
       ],
-      providers: [ConfigurationService, AppStateService, { provide: UserService, useClass: MockUserService }],
+      providers: [ConfigurationService, AppStateService, { provide: AUTH_SERVICE, useValue: mockService }],
     }).compileComponents()
 
     const appStateService = getTestBed().inject(AppStateService)
@@ -99,9 +100,8 @@ describe('PageHeaderComponent', () => {
     fixture = TestBed.createComponent(TestHostComponent)
     component = fixture.componentInstance
     fixture.detectChanges()
-
-    const userService = fixture.debugElement.injector.get(UserService)
-    userServiceSpy = jest.spyOn(userService, 'hasPermission')
+    const authService = fixture.debugElement.injector.get(AUTH_SERVICE)
+    authServiceSpy = jest.spyOn(authService, 'hasPermission')
   })
 
   it('should create', () => {
@@ -130,13 +130,13 @@ describe('PageHeaderComponent', () => {
       fixture.debugElement.nativeElement.querySelectorAll('[data-testid="ocx-page-header-overflow-action-button"]')
     ).toHaveLength(1)
     expect(fixture.debugElement.nativeElement.querySelector('[title="More actions"]')).toBeTruthy()
-    expect(userServiceSpy).toHaveBeenCalledTimes(4)
+    expect(authServiceSpy).toHaveBeenCalledTimes(4)
   })
 
   it("should check permissions and not render button that user isn't allowed to see", () => {
-    userServiceSpy.mockClear()
+    authServiceSpy.mockClear()
 
-    userServiceSpy.mockReturnValue(false)
+    authServiceSpy.mockReturnValue(false)
 
     expect(
       fixture.debugElement.nativeElement.querySelectorAll('[data-testid="ocx-page-header-inline-action-button"]')
@@ -156,6 +156,6 @@ describe('PageHeaderComponent', () => {
       fixture.debugElement.nativeElement.querySelectorAll('[data-testid="ocx-page-header-overflow-action-button"]')
     ).toHaveLength(0)
     expect(fixture.debugElement.nativeElement.querySelector('[title="More actions"]')).toBeFalsy()
-    expect(userServiceSpy).toHaveBeenCalledTimes(4)
+    expect(authServiceSpy).toHaveBeenCalledTimes(4)
   })
 })
