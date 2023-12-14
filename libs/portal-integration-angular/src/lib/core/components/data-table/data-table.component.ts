@@ -8,6 +8,7 @@ import { DataSortDirection } from '../../../model/data-sort-direction'
 import { ColumnType } from '../../../model/column-type.model'
 import { DataAction } from '../../../model/data-action'
 import { DataSortBase } from '../data-sort-base/data-sort-base'
+import { GetTooltipContentUtils } from '../../utils/getTooltipContent.utils'
 
 type Primitive = number | string | boolean | bigint | Date
 export type Row = {
@@ -136,6 +137,8 @@ export class DataTableComponent extends DataSortBase implements OnInit {
     const dv = this.injector.get('DataViewComponent', null)
     return dv?.deleteItemObserved || dv?.deleteItem.observed || this.deleteTableRow.observed
   }
+
+  getTooltipContent = GetTooltipContentUtils.getTooltipContent;
 
   constructor(@Inject(LOCALE_ID) locale: string, translateService: TranslateService, private router: Router, private injector: Injector) {
     super(locale, translateService)

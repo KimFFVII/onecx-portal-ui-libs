@@ -198,7 +198,11 @@
 </ng-template>
 
 <ng-template #defaultStringCell let-rowObject="rowObject" let-column="column">
-  <ng-container> {{ rowObject[column.id] }} </ng-container>
+  <ng-container>
+    <div class="text-limited" pTooltip="{{ getTooltipContent(rowObject[column.id], 75) }}">
+      {{ rowObject[column.id] }} 
+    </div>
+  </ng-container>
 </ng-template>
 
 <ng-template #defaultNumberCell let-rowObject="rowObject" let-column="column">

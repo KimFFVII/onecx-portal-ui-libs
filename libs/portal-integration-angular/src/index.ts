@@ -63,6 +63,8 @@ export * from './lib/services/theme.service'
 export * from './lib/services/initialize-module-guard.service'
 export * from './lib/services/userprofile-api.service'
 export * from './lib/services/portal-dialog.service'
+
+//pipes
 export * from './lib/core/pipes/dynamic.pipe'
 export * from './lib/core/pipes/relative-date.pipe'
 
@@ -106,3 +108,4 @@ export * from './lib/core/utils/objectutils'
 export * from './lib/core/utils/dateutils'
 export * from './lib/core/utils/colorutils'
 export * from './lib/core/utils/translate.combined.loader'
+export * from './lib/core/utils/getTooltipContent.utils'
