@@ -1,5 +1,5 @@
 import { SupportTicketApiService } from './../../../services/support-ticket-api.service'
-import { AfterViewInit, Component, HostListener, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core'
+import { AfterViewInit, Component, HostListener, Inject, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core'
 import { MenuItem, MessageService, PrimeNGConfig } from 'primeng/api'
 import { PortalUIService } from '../../../services/portal-ui.service'
 import { catchError, combineLatest, filter, first, map, mergeMap, Observable, of, withLatestFrom } from 'rxjs'
@@ -14,6 +14,9 @@ import { HelpPageAPIService } from '../../../services/help-api-service'
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy'
 import { HttpResponse } from '@angular/common/http'
 import { UserService } from '../../../services/user.service'
+import { PortalMessageService } from '../../../services/portal-message.service'
+import { IAuthService } from '../../../api/iauth.service'
+import { AUTH_SERVICE } from '../../../api/injection-tokens'
 
 @Component({
   selector: 'ocx-portal-viewport',
@@ -69,7 +72,11 @@ export class PortalViewportComponent implements OnInit, AfterViewInit, OnDestroy
     private helpDataService: HelpPageAPIService,
     private dialogService: DialogService,
     private userService: UserService,
+    private portalMessageService: PortalMessageService,
+    @Inject(AUTH_SERVICE) public authService: IAuthService
   ) {
+    this.portalMessageService.message$.subscribe((message) => this.messageService.add(message))
+
     this.hideMenuButtonTitle = this.portalUIConfig.getTranslation('hideMenuButton')
     this.showMenuButtonTitle = this.portalUIConfig.getTranslation('showMenuButton')
 
@@ -309,10 +316,9 @@ export class PortalViewportComponent implements OnInit, AfterViewInit, OnDestroy
         },
         error: (error) => {
           console.log(`Could not save help item`)
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Help Item definition update failed',
-            detail: `Server error: ${error.status}`,
+          this.portalMessageService.error({
+            summaryKey: 'OCX_PORTAL_VIEWPORT.UPDATE_HELP_ARTICLE_ERROR',
+            detailKey: `Server error: ${error.status}`,
           })
           this.helpPageEditorDisplayed = false
         },
