@@ -13,7 +13,16 @@ module.exports = {
       { type: 'test', hidden: true },
     ],
   },
-  releaseRules: [{ type: 'refactor', release: 'patch' }],
+  releaseRules: [
+		{ type: 'refactor', release: 'prerelease' },
+		{ type: 'feat', release: 'prerelease' },
+		{ type: 'fix', release: 'prerelease' },
+		{ type: 'chore', release: 'prerelease' },
+		{ type: 'docs', release: 'prerelease' },
+		{ type: 'style', release: 'prerelease' },
+		{ type: 'perf', release: 'prerelease' },
+		{ type: 'test', erelease: 'prerelease' },
+	],
   plugins: [
     '@semantic-release/commit-analyzer',
     '@semantic-release/release-notes-generator',
