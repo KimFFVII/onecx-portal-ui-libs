@@ -167,9 +167,13 @@
                   ></div>
                 </ng-template>
                 <ng-template pTemplate="item" let-value>
-                  <ng-container [ngSwitch]="(currentFilterColumn$ | async)?.columnType">
-                    <span *ngSwitchCase="'DATE'">{{ isDate(value.label) ? (value.label | date) : '' }}</span>
-                    <span *ngSwitchDefault> {{ value.label }} </span>
+                  <ng-container
+                    [ngTemplateOutlet]="getTemplate(column)"
+                    [ngTemplateOutletContext]="{
+                      rowObject: getRowObjectFromMultiselectItem(value, column),
+                      column: column
+                  }"
+                  >
                   </ng-container>
                 </ng-template>
               </p-multiSelect>

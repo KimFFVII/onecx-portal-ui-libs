@@ -26,6 +26,7 @@ import { DataTableColumn } from '../../model/data-table-column.model'
 import { ObjectUtils } from '../../utils/objectutils'
 import { DataSortBase } from '../data-sort-base/data-sort-base'
 import { isValidDate } from '@onecx/accelerator'
+import { MultiSelectItem } from 'primeng/multiselect'
 
 type Primitive = number | string | boolean | bigint | Date
 export type Row = {
@@ -184,6 +185,41 @@ export class DataTableComponent extends DataSortBase implements OnInit, AfterCon
   @ContentChild('translationKeyCell') translationKeyCellChildTemplate: TemplateRef<any> | undefined
   get _translationKeyCell(): TemplateRef<any> | undefined {
     return this.translationKeyCellTemplate || this.translationKeyCellChildTemplate
+  }
+  @Input() stringFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('stringFilterCell') stringFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _stringFilterCell(): TemplateRef<any> | undefined {
+    return this.stringFilterCellTemplate || this.stringFilterCellChildTemplate
+  }
+  @Input() numberFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('numberFilterCell') numberFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _numberFilterCell(): TemplateRef<any> | undefined {
+    return this.numberFilterCellTemplate || this.numberFilterCellChildTemplate
+  }
+  @Input() customFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('customFilterCell') customFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _customFilterCell(): TemplateRef<any> | undefined {
+    return this.customFilterCellTemplate || this.customFilterCellChildTemplate
+  }
+  @Input() dateFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('dateFilterCell') dateFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _dateFilterCell(): TemplateRef<any> | undefined {
+    return this.dateFilterCellTemplate || this.dateFilterCellChildTemplate
+  }
+  @Input() relativeDateFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('relativeDateFilterCell') relativeDateFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _relativeDateFilterCell(): TemplateRef<any> | undefined {
+    return this.relativeDateFilterCellTemplate || this.relativeDateFilterCellChildTemplate
+  }
+  @Input() filterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('filterCell') filterCellChildTemplate: TemplateRef<any> | undefined
+  get _filterCell(): TemplateRef<any> | undefined {
+    return this.filterCellTemplate || this.filterCellChildTemplate
+  }
+  @Input() translationKeyFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('translationKeyFilterCell') translationKeyFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _translationKeyFilterCell(): TemplateRef<any> | undefined {
+    return this.translationKeyFilterCellTemplate || this.translationKeyFilterCellChildTemplate
   }
 
   _additionalActions$ = new BehaviorSubject<DataAction[]>([])
@@ -360,6 +396,27 @@ export class DataTableComponent extends DataSortBase implements OnInit, AfterCon
         case 'translationKeyCell':
           this.translationKeyCellChildTemplate = item.template
           break
+        case 'stringFilterCell':
+          this.stringFilterCellChildTemplate = item.template
+          break
+        case 'numberFilterCell':
+          this.numberFilterCellChildTemplate = item.template
+          break
+        case 'customFilterCell':
+          this.customFilterCellChildTemplate = item.template
+          break
+        case 'dateFilterCell':
+          this.dateFilterCellChildTemplate = item.template
+          break
+        case 'relativeDateFilterCell':
+          this.relativeDateFilterCellChildTemplate = item.template
+          break
+        case 'filterCellTemplate':
+          this.filterCellChildTemplate = item.template
+          break
+        case 'translationKeyFilterCell':
+          this.translationKeyFilterCellChildTemplate = item.template
+          break
       }
     })
   }
@@ -517,6 +574,12 @@ export class DataTableComponent extends DataSortBase implements OnInit, AfterCon
         return this._customCell ?? templates.find((template) => template.name === 'defaultCustomCell')?.template ?? null
       default:
         return this._stringCell ?? templates.find((template) => template.name === 'defaultStringCell')?.template ?? null
+    }
+  }
+
+  getRowObjectFromMultiselectItem(value: MultiSelectItem, column: DataTableColumn) {
+    return {
+      [column.id]: value.label,
     }
   }
 }

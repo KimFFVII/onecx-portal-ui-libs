@@ -217,6 +217,44 @@ export class DataViewComponent implements DoCheck, OnInit, AfterContentInit {
     )
   }
 
+  @Input() tableFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('tableFilterCell') tableFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _tableFilterCell(): TemplateRef<any> | undefined {
+    return this.tableFilterCellTemplate || this.tableFilterCellChildTemplate
+  }
+  @Input() dateTableFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('dateTableFilterCell') dateTableFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _dateTableFilterCell(): TemplateRef<any> | undefined {
+    return this.dateTableFilterCellTemplate || this.dateTableFilterCellChildTemplate
+  }
+  @Input() relativeDateTableFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('relativeDateTableFilterCell') relativeDateTableFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _relativeDateTableFilterCell(): TemplateRef<any> | undefined {
+    return this.relativeDateTableFilterCellTemplate || this.relativeDateTableFilterCellChildTemplate
+  }
+  @Input() translationKeyTableFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('translationKeyTableFilterCell') translationKeyTableFilterCellChildTemplate:
+    | TemplateRef<any>
+    | undefined
+  get _translationKeyTableFilterCell(): TemplateRef<any> | undefined {
+    return this.translationKeyTableFilterCellTemplate || this.translationKeyTableFilterCellChildTemplate
+  }
+  @Input() stringTableFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('stringTableFilterCell') stringTableFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _stringTableFilterCell(): TemplateRef<any> | undefined {
+    return this.stringTableFilterCellTemplate || this.stringTableFilterCellChildTemplate
+  }
+  @Input() numberTableFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('numberTableFilterCell') numberTableFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _numberTableFilterCell(): TemplateRef<any> | undefined {
+    return this.numberTableFilterCellTemplate || this.numberTableFilterCellChildTemplate
+  }
+  @Input() customTableFilterCellTemplate: TemplateRef<any> | undefined
+  @ContentChild('customTableFilterCell') customTableFilterCellChildTemplate: TemplateRef<any> | undefined
+  get _customTableFilterCell(): TemplateRef<any> | undefined {
+    return this.customTableFilterCellTemplate || this.customTableFilterCellChildTemplate
+  }
+
   @Input() additionalActions: DataAction[] = []
 
   @Output() filtered = new EventEmitter<Filter[]>()
@@ -328,6 +366,27 @@ export class DataViewComponent implements DoCheck, OnInit, AfterContentInit {
           break
         case 'relativeDateTableCell':
           this.relativeDateTableCellChildTemplate = item.template
+          break
+        case 'tableFilterCell':
+          this.tableFilterCellChildTemplate = item.template
+          break
+        case 'dateTableFilterCell':
+          this.dateTableFilterCellChildTemplate = item.template
+          break
+        case 'relativeDateTableFilterCell':
+          this.relativeDateTableFilterCellChildTemplate = item.template
+          break
+        case 'translationKeyTableFilterCell':
+          this.translationKeyTableFilterCellChildTemplate = item.template
+          break
+        case 'stringTableFilterCell':
+          this.stringTableFilterCellChildTemplate = item.template
+          break
+        case 'numberTableFilterCell':
+          this.numberTableFilterCellChildTemplate = item.template
+          break
+        case 'customTableFilterCell':
+          this.customTableFilterCellChildTemplate = item.template
           break
       }
     })

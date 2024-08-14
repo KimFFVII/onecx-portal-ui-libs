@@ -112,6 +112,13 @@ export class InteractiveDataViewComponent implements OnInit, AfterContentInit {
   @ContentChild('gridItem') gridItem: TemplateRef<any> | undefined
   @ContentChild('listItem') listItem: TemplateRef<any> | undefined
   @ContentChild('topCenter') topCenter: TemplateRef<any> | undefined
+  @ContentChild('tableFilterCell') tableFilterCell: TemplateRef<any> | undefined
+  @ContentChild('dateTableFilterCell') dateTableFilterCell: TemplateRef<any> | undefined
+  @ContentChild('relativeDateTableFilterCell') relativeDateTableFilterCell: TemplateRef<any> | undefined
+  @ContentChild('translationKeyTableFilterCell') translationKeyTableFilterCell: TemplateRef<any> | undefined
+  @ContentChild('stringTableFilterCell') stringTableFilterCell: TemplateRef<any> | undefined
+  @ContentChild('numberTableFilterCell') numberTableFilterCell: TemplateRef<any> | undefined
+  @ContentChild('customTableFilterCell') customTableFilterCell: TemplateRef<any> | undefined
   _templates: QueryList<PrimeTemplate> | undefined
   @ContentChildren(PrimeTemplate)
   set templates(value: QueryList<PrimeTemplate> | undefined) {
@@ -191,6 +198,27 @@ export class InteractiveDataViewComponent implements OnInit, AfterContentInit {
   get _listItem(): TemplateRef<any> | undefined {
     return this.listItem
   }
+  get _tableFilterCell(): TemplateRef<any> | undefined {
+    return this.tableFilterCell
+  }
+  get _dateTableFilterCell(): TemplateRef<any> | undefined {
+    return this.dateTableFilterCell
+  }
+  get _relativeDateTableFilterCell(): TemplateRef<any> | undefined {
+    return this.relativeDateTableFilterCell
+  }
+  get _translationKeyTableFilterCell(): TemplateRef<any> | undefined {
+    return this.translationKeyTableFilterCell
+  }
+  get _stringTableFilterCell(): TemplateRef<any> | undefined {
+    return this.stringTableFilterCell
+  }
+  get _numberTableFilterCell(): TemplateRef<any> | undefined {
+    return this.numberTableFilterCell
+  }
+  get _customTableFilterCell(): TemplateRef<any> | undefined {
+    return this.customTableFilterCell
+  }
 
   _data: RowListGridData[] = []
   @Input()
@@ -263,6 +291,27 @@ export class InteractiveDataViewComponent implements OnInit, AfterContentInit {
           break
         case 'topCenter':
           this.topCenter = item.template
+          break
+        case 'tableFilterCell':
+          this.tableFilterCell = item.template
+          break
+        case 'dateTableFilterCell':
+          this.dateTableFilterCell = item.template
+          break
+        case 'relativeDateTableFilterCell':
+          this.relativeDateTableFilterCell = item.template
+          break
+        case 'translationKeyTableFilterCell':
+          this.translationKeyTableFilterCell = item.template
+          break
+        case 'stringTableFilterCell':
+          this.stringTableFilterCell = item.template
+          break
+        case 'numberTableFilterCell':
+          this.numberTableFilterCell = item.template
+          break
+        case 'customTableFilterCell':
+          this.customTableFilterCell = item.template
           break
       }
     })
